@@ -1,0 +1,81 @@
+-- INNER JOIN: Apenas as linhas que têm correspondência em ambas as tabelas.
+select l.titulo, f.nome, f.funcao from
+livros as l inner join funcionarios as f
+on l.CPF_funcionario = f.CPF;
+
+-- LEFT JOIN: Todas as linhas da tabela à esquerda, com correspondências da tabela à direita (ou NULL se não houver correspondência).
+select l.titulo, f.nome, f.funcao from
+livros as l left join funcionarios as f
+on l.CPF_funcionario = f.CPF;
+
+-- RIGHT JOIN: Todas as linhas da tabela à direita, com correspondências da tabela à esquerda (ou NULL se não houver correspondência).
+select l.titulo, f.nome, f.funcao from
+livros as l right join funcionarios as f
+on l.CPF_funcionario = f.CPF;
+
+-- FULL JOIN: Ou FULL OUTER JOIN é uma junção que combina os resultados de um LEFT JOIN e um RIGHT JOIN. Ele retorna todas as linhas de ambas as tabelas, completando com NULL onde não há correspondência.
+select l.titulo, f.nome, f.funcao from
+livros as l right join funcionarios as f
+on l.CPF_funcionario = f.CPF
+union
+select l.titulo, f.nome, f.funcao from
+livros as l left join funcionarios as f
+on l.CPF_funcionario = f.CPF;
+
+select*from livros;
+select*from livros_autores;
+select*from autores;
+select*from editoras;
+
+-- Exercício 01
+select f.nome, f.salario
+from funcionarios as f
+where CPF = '20321295096';
+
+-- Exercício 02
+select * from funcionarios;
+update funcionarios set
+funcao = 'auxiliar',
+salario = 1500
+where CPF = '32361298734';
+
+-- Exercício 03
+select * from usuarios;
+delete from usuarios
+where CPF_usuario = '45399109881';
+
+-- Exercício 04
+insert into usuarios(CPF_usuario, nome, endereco, telefone)
+value ('00423556811','Maicon Douglas','rua103-12 Número 426 Bairro Centro','35445074');
+
+-- Exercício 05
+select a.nome as autor, e.nome_editora as editora 
+from livros l 
+inner join livros_autores la on l.numero = la.numero_livro
+inner join autores a on la.codigo_autor = a.codigo
+inner join editoras e on l.codigo_editora = e.codigo_editora
+where l.titulo = 'Salomão - O Homem mais rico que já existiu';
+
+-- Exercício 06 
+select l.titulo as Livros
+from livros l 
+inner join livros_autores la on l.numero = la.numero_livro
+inner join autores a on la.codigo_autor = a.codigo
+where a.nome = 'Adélia Prado'; 
+
+-- Exercício 07
+select l.titulo, f.nome
+from livros l
+inner join funcionarios f on l.CPF_funcionario = f.CPF
+where l.CPF_usuarioRetirar is null;
+
+-- Exercício 08
+select l.titulo
+from livros l
+inner join funcionarios f on l.CPF_usuarioRetirar = f.CPF
+where l.CPF_usuarioRetirar is not null;
+
+-- Exercício 09
+select f.nome, l.titulo
+from livros l
+left join funcionarios f on l.CPF_funcionario = f.CPF;
